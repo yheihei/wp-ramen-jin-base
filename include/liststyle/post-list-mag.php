@@ -219,14 +219,11 @@ if ( is_enable_new_entry_show() ) :
 							// そのカテゴリーの記事一覧を表示する場合
 							$args = array(
 								'cat' => array( $featured_category->term_id ),
-								'posts_per_page' => get_option( 'posts_per_page' ),
+								'posts_per_page' => -1, // 全件取得
 							);
 							$the_query = new WP_Query( $args );
 							while ( $the_query->have_posts() ) : $the_query->the_post();
-								// カテゴリー情報を取得
-								$category = get_the_category();
-								$cat_id   = $category[0]->cat_ID;
-								$cat_name = $category[0]->cat_name;
+								// そのカテゴリーの記事一覧を表示
 								get_template_part('include/liststyle/parts/post-list-mag-parts');
 							endwhile;
 						?>
