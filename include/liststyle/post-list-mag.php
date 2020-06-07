@@ -214,57 +214,75 @@ if ( is_enable_new_entry_show() ) :
                 $cat_eyecatch = $cat_option['cps_image_cat'];
               }
               $cat_desc = $cat_option['cps_meta_content'];
-            ?>
-            <article class="post-list-item">
-              <a class="post-list-link" rel="bookmark" href="<?php echo get_category_link( $featured_child_category->term_id ); ?>" itemprop='mainEntityOfPage'>
-                <div class="post-list-inner">
-                  <div class="post-list-thumb" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-                    <?php if ( ! is_mobile() ): ?>
-                      <?php if ( cps_has_post_thumbnail( $featured_child_category->term_id ) ): ?>
-                        <?php cps_category_eyecatch_by_term_id($featured_child_category->term_id); ?>
-                        <meta itemprop="url" content="<?php cps_thumb_info('url'); ?>">
-                        <meta itemprop="width" content="640">
-                        <meta itemprop="height" content="360">
-                      <?php else: ?>
-                        <img src="<?php echo get_jin_noimage_url(); ?>" width="480" height="270" alt="no image" />
-                        <meta itemprop="url" content="<?php bloginfo('template_url'); ?>/img/noimg320.png">
-                        <meta itemprop="width" content="480">
-                        <meta itemprop="height" content="270">
-                      <?php endif; ?>
-                    <?php else: ?>
-                      <?php if( is_post_list_style() == "magazinestyle-sp1col" ): ?>
-                        <?php if ( cps_has_post_thumbnail( $featured_child_category->term_id ) ): ?>
-                          <?php cps_category_eyecatch_by_term_id($featured_child_category->term_id); ?>
-                          <meta itemprop="url" content="<?php cps_thumb_info('url'); ?>">
-                          <meta itemprop="width" content="640">
-                          <meta itemprop="height" content="360">
-                        <?php else: ?>
-                          <img src="<?php echo get_jin_noimage_url(); ?>" width="480" height="270" alt="no image" />
-                          <meta itemprop="url" content="<?php bloginfo('template_url'); ?>/img/noimg320.png">
-                          <meta itemprop="width" content="480">
-                          <meta itemprop="height" content="270">
-                        <?php endif; ?>
-                      <?php else: ?>
-                        <?php if ( cps_has_post_thumbnail( $featured_child_category->term_id ) ): ?>
-                          <?php cps_category_eyecatch_by_term_id($featured_child_category->term_id); ?>
-                          <meta itemprop="url" content="<?php cps_thumb_info('url'); ?>">
-                          <meta itemprop="width" content="320">
-                          <meta itemprop="height" content="180">
-                        <?php else: ?>
-                          <img src="<?php echo get_jin_noimage_url(); ?>" width="480" height="270" alt="no image" />
-                          <meta itemprop="url" content="<?php bloginfo('template_url'); ?>/img/noimg320.png">
-                          <meta itemprop="width" content="320">
-                          <meta itemprop="height" content="180">
-                        <?php endif; ?>
-                      <?php endif; ?>
-                    <?php endif; ?>
-                  </div>
-                  <div class="post-list-meta vcard">
-                    <h2 class="post-list-title entry-title" itemprop="headline"><?php echo $featured_child_category->name; ?></h2>
-                  </div>
-                </div>
-              </a>
-            </article>
+						?>
+						<?php if ( is_magazine_post_list_category( $featured_category->term_id ?? 0 ) ) :
+							// そのカテゴリーの記事一覧を表示する場合
+							$args = array(
+								'cat' => array( $featured_category->term_id ),
+								'posts_per_page' => get_option( 'posts_per_page' ),
+							);
+							$the_query = new WP_Query( $args );
+							while ( $the_query->have_posts() ) : $the_query->the_post();
+								// カテゴリー情報を取得
+								$category = get_the_category();
+								$cat_id   = $category[0]->cat_ID;
+								$cat_name = $category[0]->cat_name;
+								get_template_part('include/liststyle/parts/post-list-mag-parts');
+							endwhile;
+						?>
+						<?php else :
+							// そのカテゴリーの子カテゴリー一覧を表示する場合 ?>
+							<article class="post-list-item">
+								<a class="post-list-link" rel="bookmark" href="<?php echo get_category_link( $featured_child_category->term_id ); ?>" itemprop='mainEntityOfPage'>
+									<div class="post-list-inner">
+										<div class="post-list-thumb" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+											<?php if ( ! is_mobile() ): ?>
+												<?php if ( cps_has_post_thumbnail( $featured_child_category->term_id ) ): ?>
+													<?php cps_category_eyecatch_by_term_id($featured_child_category->term_id); ?>
+													<meta itemprop="url" content="<?php cps_thumb_info('url'); ?>">
+													<meta itemprop="width" content="640">
+													<meta itemprop="height" content="360">
+												<?php else: ?>
+													<img src="<?php echo get_jin_noimage_url(); ?>" width="480" height="270" alt="no image" />
+													<meta itemprop="url" content="<?php bloginfo('template_url'); ?>/img/noimg320.png">
+													<meta itemprop="width" content="480">
+													<meta itemprop="height" content="270">
+												<?php endif; ?>
+											<?php else: ?>
+												<?php if( is_post_list_style() == "magazinestyle-sp1col" ): ?>
+													<?php if ( cps_has_post_thumbnail( $featured_child_category->term_id ) ): ?>
+														<?php cps_category_eyecatch_by_term_id($featured_child_category->term_id); ?>
+														<meta itemprop="url" content="<?php cps_thumb_info('url'); ?>">
+														<meta itemprop="width" content="640">
+														<meta itemprop="height" content="360">
+													<?php else: ?>
+														<img src="<?php echo get_jin_noimage_url(); ?>" width="480" height="270" alt="no image" />
+														<meta itemprop="url" content="<?php bloginfo('template_url'); ?>/img/noimg320.png">
+														<meta itemprop="width" content="480">
+														<meta itemprop="height" content="270">
+													<?php endif; ?>
+												<?php else: ?>
+													<?php if ( cps_has_post_thumbnail( $featured_child_category->term_id ) ): ?>
+														<?php cps_category_eyecatch_by_term_id($featured_child_category->term_id); ?>
+														<meta itemprop="url" content="<?php cps_thumb_info('url'); ?>">
+														<meta itemprop="width" content="320">
+														<meta itemprop="height" content="180">
+													<?php else: ?>
+														<img src="<?php echo get_jin_noimage_url(); ?>" width="480" height="270" alt="no image" />
+														<meta itemprop="url" content="<?php bloginfo('template_url'); ?>/img/noimg320.png">
+														<meta itemprop="width" content="320">
+														<meta itemprop="height" content="180">
+													<?php endif; ?>
+												<?php endif; ?>
+											<?php endif; ?>
+										</div>
+										<div class="post-list-meta vcard">
+											<h2 class="post-list-title entry-title" itemprop="headline"><?php echo $featured_child_category->name; ?></h2>
+										</div>
+									</div>
+								</a>
+							</article>
+						<?php endif; ?>
             <?php $infeed_ad_count++;?>
             <?php endforeach; ?>
         </div>
