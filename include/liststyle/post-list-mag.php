@@ -219,7 +219,7 @@ if ( is_enable_new_entry_show() ) :
 							// そのカテゴリーの記事一覧を表示する場合
 							$args = array(
 								'cat' => array( $featured_category->term_id ),
-								'posts_per_page' => -1, // 全件取得
+								'posts_per_page' => get_option('posts_per_page'),
 							);
 							$the_query = new WP_Query( $args );
 							while ( $the_query->have_posts() ) : $the_query->the_post();
