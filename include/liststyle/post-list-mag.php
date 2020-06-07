@@ -185,20 +185,8 @@ if ( is_enable_new_entry_show() ) :
                 <?php $infeed_ad_num++; $infeed_ad_count++;?>
               <?php endif; ?>
 
-            <?php endif; ?>
-
-            <?php
-              $cat_class = get_category($featured_category->term_id);
-              $cat_option = get_option($featured_category->term_id);
-      
-              if( is_array($cat_option) ){
-              $cat_option = array_merge(array('cont'=>''),$cat_option);
-              }
-              if( ! empty($cat_option['cps_image_cat']) ){
-                $cat_eyecatch = $cat_option['cps_image_cat'];
-              }
-              $cat_desc = $cat_option['cps_meta_content'];
-						?>
+						<?php endif; ?>
+						
 						<?php if ( is_magazine_post_list_category( $featured_category->term_id ?? 0 ) ) :
 							// そのカテゴリーの記事一覧を表示する場合
 							$args = array(
@@ -210,6 +198,7 @@ if ( is_enable_new_entry_show() ) :
 								// そのカテゴリーの記事一覧を表示
 								get_template_part('include/liststyle/parts/post-list-mag-parts');
 							endwhile;
+							wp_reset_query();
 						?>
 						<?php else :
 							// そのカテゴリーの子カテゴリー一覧を表示する場合 ?>
