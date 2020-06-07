@@ -7,6 +7,10 @@ function theme_enqueue_styles() {
 
 define("JIN_YHEI_CATEGORY_PRIORITY_VALUE_DEFAULT", 1);
 define('JIN_YHEI_CATEGORY_POSTS_COUNT_FORMAT', '訪問 %s 回');
+define(
+	'JIN_YHEI_TOP_MAGAZINE_CATEGORY_SHOWING_POST_LISTS',
+	'jin_yhei_top_magazine_category_showing_post_lists'
+);
 
 function my_log($message) {
   $log_message = sprintf("%s:%s\n", date_i18n('Y-m-d H:i:s'), $message);
@@ -75,6 +79,17 @@ function sortCategorysByPriority( $target_categorys ) {
 }
 
 /**
+ * マガジンで記事一覧を表示するカテゴリーか否かを判定する
+ *
+ * @param int $category_id カテゴリーID.
+ * @return bool
+ */
+function is_magazine_post_list_category( int $category_id ) : bool {
+	$exploded_category_ids = explode( ',', get_option( JIN_YHEI_TOP_MAGAZINE_CATEGORY_SHOWING_POST_LISTS ) );
+	return in_array( strval( $category_id ), $exploded_category_ids, true );
+}
+
+/**
  * タブの中に新着表示を含む場合設定値をtrueで返す
  */
 function is_involved_new_entry_in_category_tabs() {
@@ -92,6 +107,7 @@ function top_category_menu() {
 function register_jin_child_settings() {
   // トップページ設定
   register_setting( 'top-category-settings-group', 'jin_yhei_top_categories' );
+	register_setting( 'top-category-settings-group', JIN_YHEI_TOP_MAGAZINE_CATEGORY_SHOWING_POST_LISTS ); // 記事一覧表示したいカテゴリーID.
   register_setting( 'top-category-settings-group', 'jin_yhei_top_tag_names' );
   // トップのタブに新着記事を含める
   register_setting( 'top-category-settings-group', 'jin_yhei_top_categories_is_involved_new_entry' );
@@ -121,8 +137,8 @@ function jin_child_settings_page() {
         <tbody>
           <tr>
             <th scope="row">
-              <label for="jin_yhei_top_categories">タブに表示したいカテゴリーID</label>
-            </th>
+							<label for="jin_yhei_top_categories">タブに表示したいカテゴリーID</label>
+						</th>
               <td>
                 <input type="text" 
                   id="jin_yhei_top_categories" 
@@ -131,7 +147,19 @@ function jin_child_settings_page() {
                   value="<?php echo get_option('jin_yhei_top_categories'); ?>"
                   placeholder="2,8,10,12 (カテゴリーIDをカンマ区切りで入力)"
                 >
-              </td>
+							</td>
+						<th scope="row">
+							<label for="jin_yhei_target_rss_urls">記事一覧表示したいカテゴリーID</label>
+						</th>
+						<td>
+							<input type="text" 
+								id="<?php echo esc_attr( JIN_YHEI_TOP_MAGAZINE_CATEGORY_SHOWING_POST_LISTS ); ?>" 
+								class="regular-text" 
+								name="<?php echo esc_attr( JIN_YHEI_TOP_MAGAZINE_CATEGORY_SHOWING_POST_LISTS ); ?>" 
+								value="<?php echo get_option( JIN_YHEI_TOP_MAGAZINE_CATEGORY_SHOWING_POST_LISTS ); ?>"
+								placeholder="2,8,10,12 (カテゴリーIDをカンマ区切りで入力)"
+							>
+						</td>
           </tr>
           <tr>
             <th scope="row">
