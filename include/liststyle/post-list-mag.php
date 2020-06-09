@@ -201,14 +201,13 @@ if ( is_enable_new_entry_show() ) :
 							wp_reset_query();
 						?>
 						<?php else :
-							// そのカテゴリーの子カテゴリー一覧を表示する場合 ?>
-							<?php 
-								$featured_child_categorys = getFeaturedCategorysChilds($featured_category->term_id);
-								foreach($featured_child_categorys as $featured_child_category) :
-									set_query_var( 'featured_child_category', $featured_child_category );
-									get_template_part( 'include/liststyle/parts/post-list-mag-parts-category' );
-								?>
-							<?php endforeach; ?>
+							// そのカテゴリーの子カテゴリー一覧を表示する場合.
+							$featured_child_categorys = getFeaturedCategorysChilds( $featured_category->term_id );
+							foreach( $featured_child_categorys as $featured_child_category ) {
+								set_query_var( 'featured_child_category', $featured_child_category );
+								get_template_part( 'include/liststyle/parts/post-list-mag-parts-category' );
+							}
+						?>
 						<?php endif; ?>
             <?php $infeed_ad_count++;?>
         </div>
