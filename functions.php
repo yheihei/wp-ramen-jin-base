@@ -830,4 +830,20 @@ function get_count_category_with_tag( $tag_id ) {
   return count( get_categorys_by_tag( $tag_id ) );
 }
 
+/**
+ * 固定ページ表示Widgetの登録
+ */
+require_once dirname( __FILE__ ) . '/include/widget/class-page-content-widget.php';
+add_action( 'widgets_init', function () {
+	register_widget( 'Page_Content_Widget' );
+	register_sidebar( array(
+		'name'          => 'トップページ上部 コンテンツ',
+		'id'            => 'top_top_contents',
+		'before_widget' => '<div>',
+		'after_widget'  => '</div>',
+		'before_title'  => '',
+		'after_title'   => '',
+	) );
+} );
+
 ?>

@@ -21,6 +21,13 @@ if ( is_enable_new_entry_show() ) :
   </div>
 <?php endif; // タブの上に最新記事2記事分へのリンクを設置?>
 
+<?php
+// トップページ上部 コンテンツ.
+if ( is_active_sidebar( 'top_top_contents' ) ) {
+	dynamic_sidebar( 'top_top_contents' );
+}
+?>
+
 <?php if( ! get_theme_mod('toppost_list_cat') ) :?>
 <div class="toppost-list-box-simple">
   <div class="post-list-mag">
