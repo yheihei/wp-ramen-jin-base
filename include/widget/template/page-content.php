@@ -8,6 +8,10 @@
 
 $content_post_id = get_query_var( 'post_id', 0 );
 $content_post    = get_post( $content_post_id );
+if ( ! $content_post ) {
+	// コンテンツがない場合 何も表示しない.
+	return;
+}
 ?>
 <article class="cps-post">
 	<div class="cps-post-main-box">
