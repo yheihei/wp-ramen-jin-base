@@ -19,7 +19,10 @@ if ( is_enable_new_entry_show() ) :
   <?php endwhile; ?>
     </div>
   </div>
-<?php endif; // タブの上に最新記事2記事分へのリンクを設置?>
+	<?php
+	wp_reset_postdata();
+endif; // タブの上に最新記事2記事分へのリンクを設置.
+?>
 
 <?php
 // トップページ上部 コンテンツ.

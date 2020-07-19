@@ -15,23 +15,22 @@ class Page_Content_Widget extends WP_Widget {
 	 */
 	public function __construct() {
 		parent::__construct(
-			'yhei_page_widhget',
+			'yhei_page_widget',
 			'固定ページ表示',
 			array( 'description' => '固定ページのIDを指定してコンテンツを表示します' )
 		);
 	}
 
 	/**
-	 * 表側の Widget を出力する
+	 * Widget のhtmlを出力する
 	 *
 	 * @param array $args      'register_sidebar'で設定した「before_title, after_title, before_widget, after_widget」が入る.
 	 * @param array $instance  Widgetの設定項目.
 	 */
 	public function widget( $args, $instance ) {
 		$page_id = $instance['page_id'];
-		echo $args['before_widget'];
-		echo "<p>固定ページのID: ${page_id}</p>";
-		echo $args['after_widget'];
+		set_query_var( 'post_id', $page_id );
+		get_template_part( 'include/widget/template/page', 'content' );
 	}
 
 	/**
@@ -64,7 +63,7 @@ class Page_Content_Widget extends WP_Widget {
 	 * @return array|bool               保存（更新）する設定データ。falseを返すと更新しない.
 	 */
 	public function update( $new_instance, $old_instance ) {
-		return $this->isValidId( $new_instance['page_id'] ?? '' ) ? $new_instance : false;
+		return $this->is_valid_id( $new_instance['page_id'] ?? '' ) ? $new_instance : false;
 	}
 
 	/**
@@ -73,7 +72,7 @@ class Page_Content_Widget extends WP_Widget {
 	 * @param string $id 固定ページのID.
 	 * @return bool
 	 */
-	public function isValidId( $id ) {
+	public function is_valid_id( $id ) {
 		return intval( $id ) ? true : false;
 	}
 }

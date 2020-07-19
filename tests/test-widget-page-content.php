@@ -40,7 +40,7 @@ class Y_固定ページを表示するウィジェット extends WP_UnitTestCase
 	 * @test
 	 */
 	public function 固定ページのIDが有効であると判定できる() {
-		$this->assertEquals( true, $this->widget->isValidId( '1' ) );
+		$this->assertEquals( true, $this->widget->is_valid_id( '1' ) );
 	}
 
 	/**
@@ -49,7 +49,7 @@ class Y_固定ページを表示するウィジェット extends WP_UnitTestCase
 	 * @test
 	 */
 	public function 固定ページのIDが全角文字列の時無効であると判定できる() {
-		$this->assertEquals( false, $this->widget->isValidId( 'ほげ' ) );
+		$this->assertEquals( false, $this->widget->is_valid_id( 'ほげ' ) );
 	}
 
 	/**
@@ -58,7 +58,7 @@ class Y_固定ページを表示するウィジェット extends WP_UnitTestCase
 	 * @test
 	 */
 	public function 固定ページのIDが半角英数の時無効であると判定できる() {
-		$this->assertEquals( false, $this->widget->isValidId( 'hoge' ) );
+		$this->assertEquals( false, $this->widget->is_valid_id( 'hoge' ) );
 	}
 
 	/**
