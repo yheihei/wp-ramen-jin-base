@@ -336,6 +336,13 @@ if ( is_active_sidebar( 'top_top_contents' ) ) {
 </div>
 <?php endif; ?>
 
+<?php
+// トップページ下部 コンテンツ.
+if ( is_active_sidebar( 'top_bottom_contents' ) ) {
+	dynamic_sidebar( 'top_bottom_contents' );
+}
+?>
+
 <script>
 (function($){
   // マガジンの1番目の要素の高さを画面読み込み時にセットする

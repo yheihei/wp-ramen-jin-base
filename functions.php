@@ -842,6 +842,12 @@ add_action( 'widgets_init', function () {
 		'before_widget' => '<div>',
 		'after_widget'  => '</div>',
 	) );
+	register_sidebar( array(
+		'name'          => 'トップページ下部 コンテンツ',
+		'id'            => 'top_bottom_contents',
+		'before_widget' => '<div>',
+		'after_widget'  => '</div>',
+	) );
 } );
 
 ?>
